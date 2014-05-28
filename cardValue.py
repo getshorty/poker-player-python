@@ -21,24 +21,28 @@ class CardValue(object):
         
         # --- 2p
         doubles = self.countThem( 2 )
-        if doubles == 2:
+        if doubles >= 2:
           rVal = max( rVal, 20 )
           
         # --- fullhouse
         threes =  self.countThem( 3 )
-        if doubles == 1 and threes == 1:
+        if doubles >= 1 and threes >= 1:
           rVal = max( rVal, 60 )
           
         # --- flush
         if 5 <= max( [ c for c in self.col.values() ] ):
           rVal = max(  rVal, 50 )
 
-        # --- line ERROR
+        # --- line
         vals = [ v for v in self.equ.values() ]
         vals.sort()
-        ##difis = reduce( lambda x,y: 1 == abs(y - x), vals )
-        ##print 'DIFIS', difis
+        
+        
+        return rVal
+        
         line = True
+        lineC = 0
+
         for x in range( len (vals[1:]) ):
           line = line and 1 == vals[x+1] - vals[x]
          
@@ -46,7 +50,6 @@ class CardValue(object):
           rVal = max( rVal, 40 )
         
           
-        return rVal
         
         
     # --- FUNC    
@@ -80,14 +83,21 @@ if __name__ == '__main__':
   dicc = [{u'rank': u'J', u'suit': u'spades'}, {u'rank': u'J', u'suit': u'diamonds'}, {u'rank': u'J', u'suit': u'diamonds'}, {u'rank': u'J', u'suit': u'diamonds'}, {u'rank': u'K', u'suit': u'diamonds'}]
   hv =CardValue( dicc )
   print dicc
-  print hv.getValue()
+  print 'pok', hv.getValue()
   print
 
   # --- 2p
   dicc = [{u'rank': u'J', u'suit': u'spades'}, {u'rank': u'J', u'suit': u'diamonds'}, {u'rank': u'2', u'suit': u'diamonds'}, {u'rank': u'2', u'suit': u'diamonds'}, {u'rank': u'K', u'suit': u'diamonds'}]
   hv =CardValue( dicc )
   print dicc
-  print hv.getValue()
+  print '2p', hv.getValue()
+  print
+
+  # --- 2p
+  dicc = [{u'rank': u'J', u'suit': u'spades'}, {u'rank': u'J', u'suit': u'diamonds'}, {u'rank': u'2', u'suit': u'diamonds'}, {u'rank': u'2', u'suit': u'diamonds'}]
+  hv =CardValue( dicc )
+  print dicc
+  print '2p', hv.getValue()
   print
 
   # --- fullh
