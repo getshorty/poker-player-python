@@ -1,7 +1,7 @@
 __author__ = 'qzoltan'
 
 class CardValue(object):
-    PAIR=2
+    VALUES = { '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14 }
     
     def __init__(self, cards):
         self.cards = cards
@@ -9,6 +9,7 @@ class CardValue(object):
         self.equ = {}
         self.col = {}
 
+    # -----------------------------
     def getValue(self):
         rVal = 0
 
@@ -37,26 +38,24 @@ class CardValue(object):
           rVal = max( rVal, 50 )
 
         # --- line
-        vals = [ v for v in self.equ.values() ]
+        vals = [ self.VALUES[ v['rank'] ] for v in self.cards ]
         vals.sort()
         
-        return rVal
-        
-
         line = True
         lineC = 0
 
         for x in range( len (vals[1:]) ):
           if 1 == vals[x+1] - vals[x]:
-            pass
+            lineC += 1
+          else:
+            lineC = 0
           
-          
-            
-         
-        if line:
+        if 5 == lineC:
           rVal = max( rVal, 40 )
         
           
+        return rVal
+    # -----------------------------
         
         
     # --- FUNC    
@@ -125,5 +124,14 @@ if __name__ == '__main__':
   dicc = [{u'rank': u'2', u'suit': u'spades'}, {u'rank': u'J', u'suit': u'spades'}, {u'rank': u'J', u'suit': u'spades'}, {u'rank': u'K', u'suit': u'spades'}, {u'rank': u'K', u'suit': u'spades'}]
   hv =CardValue( dicc )
   print dicc
-  print hv.getValue()
+  print 'flush', hv.getValue()
   print
+
+
+# --- line
+  dicc = [{u'rank': u'J', u'suit': u'spades'}, {u'rank': u'10', u'suit': u'diamonds'}, {u'rank': u'Q', u'suit': u'diamonds'}, {u'rank': u'9', u'suit': u'spades'}, {u'rank': u'5', u'suit': u'diamonds'},{u'rank': u'8', u'suit': u'diamonds'},{u'rank': u'7', u'suit': u'heart'}]
+  hv =CardValue( dicc )
+  print dicc
+  print 'line', hv.getValue()
+  print
+        
