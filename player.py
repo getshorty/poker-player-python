@@ -12,6 +12,35 @@ class Player:
     def betRequest(self, game_state):
         global version
 
+        if version == 5:
+            try:
+                commonCards = game_state['community_cards']
+                if commonCards is None or len(commonCards) == 0:
+                    from handValue import HandValue
+                    in_action_num = game_state[u'in_action']
+                    in_action = game_state[u'players'][in_action_num]
+                    cards = in_action['hole_cards']
+                    stack = in_action['stack']
+                    smallBlind = game_state['small_blind']
+                    pot = state['pot']
+
+                    hv = HandValue(cards)
+
+                    if hv > 95:
+                        return stack
+                    elif hv > 90 and stack < smallBlind * 8:
+                        return smallBlind * 6
+                    elif hv > 80 and stack < smallBlind * 4:
+                        return smallBlind * 4
+                    else:
+                        return 0
+
+
+
+
+            except:
+                version = 4
+
         if version == 4:
             try:
                 from pre_flop_strategy1 import Strategy
@@ -32,14 +61,15 @@ class Player:
                 hv = HandValue(cards)
 
                 if hv.getValue() >= 90:
-                    return stack
+                    return stack / 2
                 elif hv.getValue() >= 80:
                     return smallBlind * 6
                 else:
-                    return smallBlind * 2
+                    return 0
+#                    return smallBlind * 2
             except:
                 version = 2
-        elif version < 3:
+        if version < 3:
             in_action_num = game_state[u'in_action']
             in_action = game_state[u'players'][in_action_num]
             stack = in_action['stack']
