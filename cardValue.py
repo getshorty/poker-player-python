@@ -33,11 +33,17 @@ class CardValue(object):
         if 5 <= max( [ c for c in self.col.values() ] ):
           rVal = max(  rVal, 50 )
 
-        # --- line
+        # --- line ERROR
         vals = [ v for v in self.equ.values() ]
         vals.sort()
-        difis = reduce( lambda x,y: 1 == abs(y - x), vals )
+        ##difis = reduce( lambda x,y: 1 == abs(y - x), vals )
         ##print 'DIFIS', difis
+        line = True
+        for x in range( len (vals[1:]) ):
+          line = line and 1 == vals[x+1] - vals[x]
+         
+        if line:
+          rVal = max( rVal, 40 )
         
           
         return rVal
