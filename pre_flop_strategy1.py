@@ -78,7 +78,7 @@ class Strategy(object):
         cards3.extend(cards2)
         print "all cards: " + str(cards3)
 
-        cardValue = CardValue(cards)
+        cardValue = CardValue(cards3)
         value = cardValue.getValue()
         print "card value " + str(value)
         if (value > 9):
