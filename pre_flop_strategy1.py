@@ -12,9 +12,9 @@ class Strategy(object):
     # returns with the raise amount for pre-flop and flop state, based on the given game state
     def do(self, state):
         if (self.isPreFlop(state)):
-            self.doPreFlop(state)
+            return self.doPreFlop(state)
         else:
-            self.doFlop()
+            return self.doFlop()
 
     def getCommonCards(self, state):
         return state['community_cards']
@@ -30,7 +30,7 @@ class Strategy(object):
 
         cards = self.getOurCards(state)
         ranks = self.getRanks(cards)
-        #ranks = "A9"   # for test only
+        #ranks = "AK"   # for test only
         print "card ranks: " + ranks
 
         # rule 1 - 4
@@ -129,4 +129,4 @@ class Strategy(object):
 
 if __name__ == "__main__":
     s = Strategy()
-    s.doFlop(state)
+    s.doPreFlop(state)
