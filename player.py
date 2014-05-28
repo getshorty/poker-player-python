@@ -30,6 +30,7 @@ class Player:
                     return hu.do(hand, stack)
 
             except:
+                print ""
                 version = 4
 
         if version == 5:
