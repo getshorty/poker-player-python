@@ -31,6 +31,7 @@ class Player:
 
             except:
                 print ""
+                Player.VERSION = "GetShorty reverted  " + str(version)
                 version = 4
 
         if version == 5:
