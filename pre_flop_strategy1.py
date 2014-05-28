@@ -6,7 +6,7 @@ import math
 
 
 # state = {u'community_cards': [], u'minimum_raise': 10, u'small_blind': 10, u'pot': 30, u'orbits': 0, u'players': [{u'status': u'active', u'hole_cards': [{u'rank': u'2', u'suit': u'spades'}, {u'rank': u'A', u'suit': u'diamonds'}], u'name': u'Peter Python', u'id': 0, u'version': u'Default Python folding player', u'stack': 980, u'bet': 20}, {u'status': u'folded', u'name': u'Peter P2', u'stack': 1000, u'version': u'Default Python folding player', u'id': 1, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P3', u'stack': 1000, u'version': u'Default Python folding player', u'id': 2, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P4', u'stack': 990, u'version': u'Default Python folding player', u'id': 3, u'bet': 10}], u'in_action': 0, u'dealer': 2, u'current_buy_in': 20}
-state = {u'community_cards': [{u'rank': u'A', u'suit': u'spades'}, {u'rank': u'A', u'suit': u'diamonds'}], u'minimum_raise': 10, u'small_blind': 10, u'pot': 30, u'orbits': 0, u'players': [{u'status': u'active', u'hole_cards': [{u'rank': u'2', u'suit': u'spades'}, {u'rank': u'A', u'suit': u'diamonds'}], u'name': u'Peter Python', u'id': 0, u'version': u'Default Python folding player', u'stack': 980, u'bet': 20}, {u'status': u'folded', u'name': u'Peter P2', u'stack': 1000, u'version': u'Default Python folding player', u'id': 1, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P3', u'stack': 1000, u'version': u'Default Python folding player', u'id': 2, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P4', u'stack': 990, u'version': u'Default Python folding player', u'id': 3, u'bet': 10}], u'in_action': 0, u'dealer': 2, u'current_buy_in': 20}
+state = {u'community_cards': [{u'rank': u'A', u'suit': u'spades'}, {u'rank': u'A', u'suit': u'diamonds'}, {u'rank': u'A', u'suit': u'diamonds'}, {u'rank': u'A', u'suit': u'diamonds'}], u'minimum_raise': 10, u'small_blind': 10, u'pot': 30, u'orbits': 0, u'players': [{u'status': u'active', u'hole_cards': [{u'rank': u'2', u'suit': u'spades'}, {u'rank': u'A', u'suit': u'diamonds'}], u'name': u'Peter Python', u'id': 0, u'version': u'Default Python folding player', u'stack': 980, u'bet': 20}, {u'status': u'folded', u'name': u'Peter P2', u'stack': 1000, u'version': u'Default Python folding player', u'id': 1, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P3', u'stack': 1000, u'version': u'Default Python folding player', u'id': 2, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P4', u'stack': 990, u'version': u'Default Python folding player', u'id': 3, u'bet': 10}], u'in_action': 0, u'dealer': 2, u'current_buy_in': 20}
 
 
 class Strategy(object):
@@ -16,7 +16,10 @@ class Strategy(object):
         if (self.isPreFlop(state)):
             return self.doPreFlop(state)
         else:
-            return self.doFlop(state)
+            if (not self.isRiver(state)):
+                return self.doFlop(state)
+            else:
+                return self.doRiver(state)
 
     def getCommonCards(self, state):
         return state['community_cards']
@@ -25,6 +28,11 @@ class Strategy(object):
     def isPreFlop(self, state):
         print ("isPreFlop: " + str(len(self.getCommonCards(state)) == 0))
         return len(self.getCommonCards(state)) == 0
+
+    # returns true if state is in pre flop
+    def isRiver(self, state):
+        print ("isRiver: " + str(len(self.getCommonCards(state)) == 4))
+        return len(self.getCommonCards(state)) == 4
 
     # returns with the raise amount for pre-flop state
     def doPreFlop(self, state):
@@ -71,7 +79,8 @@ class Strategy(object):
 
     # returns with the raise amount for flop state
     def doFlop(self, state):
-        print "warning: flop game"
+        
+        print " flop game"
         cards = self.getOurCards(state)
         cards2 = self.getCommonCards(state)
         cards3 = list(cards)
@@ -87,6 +96,27 @@ class Strategy(object):
             return raisee
 
         return 0
+
+    # returns with the raise amount for river state
+    def doRiver(self, state):
+        
+        print "warning: river game"
+        cards = self.getOurCards(state)
+        cards2 = self.getCommonCards(state)
+        cards3 = list(cards)
+        cards3.extend(cards2)
+        print "all cards: " + str(cards3)
+
+        cardValue = CardValue(cards3)
+        value = cardValue.getValue()
+        print "card value " + str(value)
+        if (value > 9):
+            raisee = math.floor(self.getPot(state) * 3 / 2)
+            print "we have one pair, raise: " + str(raisee)
+            return raisee
+
+        return 0
+
 
     def getOurPlayer(self, state):
         pos = self.getPosition(state)
