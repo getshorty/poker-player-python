@@ -16,7 +16,8 @@ class Player:
             try:
                 players = game_state['players']
                 if players is not None or len(players) > 2:
-                    from pre_flop_strategy1_v4 import Strategy
+#                    from pre_flop_strategy1_v4 import Strategy
+                    from pre_flop_strategy1 import Strategy
                     s = Strategy()
                     return s.do(game_state)
                 else:
