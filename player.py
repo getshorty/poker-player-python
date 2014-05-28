@@ -36,7 +36,7 @@ class Player:
                 elif hv.getValue() >= 80:
                     return smallBlind * 6
                 else:
-                    return 3
+                    return smallBlind * 2
             except:
                 version = 2
         elif version < 3:
