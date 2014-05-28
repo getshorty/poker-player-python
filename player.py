@@ -56,7 +56,7 @@ class Player:
 
         if version == 4:
             try:
-                from pre_flop_strategy1 import Strategy
+                from pre_flop_strategy1_v4 import Strategy
                 s = Strategy()
                 return s.do(game_state)
             except:
