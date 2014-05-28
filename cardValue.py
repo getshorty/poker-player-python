@@ -25,7 +25,7 @@ class CardValue(object):
           
         # --- fullhouse
         threes =  self.countThem( 3 )
-        if doubles >= 1 and threes == 1:
+        if doubles == 1 and threes == 1:
           rVal = max( rVal, 60 )
 
           
@@ -43,7 +43,7 @@ class CardValue(object):
     def countThem( self, pThem ):
       vRet = 0
       for e in self.equ.values():
-        if e >= pThem:
+        if e == pThem:
           vRet += 1
       return vRet
         
