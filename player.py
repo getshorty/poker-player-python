@@ -36,10 +36,11 @@ class Player:
                 elif hv.getValue() >= 80:
                     return smallBlind * 6
                 else:
-                    return smallBlind * 2
+                    return 0
+#                    return smallBlind * 2
             except:
                 version = 2
-        elif version < 3:
+        if version < 3:
             in_action_num = game_state[u'in_action']
             in_action = game_state[u'players'][in_action_num]
             stack = in_action['stack']
