@@ -12,6 +12,25 @@ class Player:
     def betRequest(self, game_state):
         global version
 
+        if version == 6:
+            try:
+                players = game_state['players']
+                if players is not None or len(players) > 2:
+                    from pre_flop_strategy1_v4 import Strategy
+                    s = Strategy()
+                    return s.do(game_state)
+                else:
+                    from headsUp import HeadsUp
+                    hu = HeadsUp()
+                    in_action_num = game_state[u'in_action']
+                    in_action = game_state[u'players'][in_action_num]
+                    hand = in_action['hole_cards']
+                    stack = in_action['stack']
+                    return hu.do(hand, stack)
+
+            except:
+                version = 4
+
         if version == 5:
             try:
                 in_action_num = game_state[u'in_action']
