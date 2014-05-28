@@ -43,7 +43,7 @@ class HandValue(object):
         if self.card1['rank'] == self.card2['rank'] and (self.card1['rank'] == 'T' or self.card1['rank'] == '9'):
             return 90
         if self.card1['rank'] == self.card2['rank']:
-            return 80
+            return 100
         return 0
 
 
