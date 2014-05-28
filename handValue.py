@@ -11,41 +11,45 @@ class HandValue(object):
         if self.card1['rank'] == 'A' and self.card2['rank'] == 'A':
             return 100
         if self.card1['rank'] == 'A' and self.card2['rank'] == 'K':
-            return 90
+            return 98
         if self.card1['rank'] == 'A' and self.card2['rank'] == 'Q':
-            return 90
+            return 97
         if self.card1['rank'] == 'A' and self.card2['rank'] == 'J':
-            return 90
+            return 95
         if self.card1['rank'] == 'K' and self.card2['rank'] == 'K':
-            return 100
+            return 99
         if self.card1['rank'] == 'K' and self.card2['rank'] == 'A':
-            return 90
+            return 98
         if self.card1['rank'] == 'K' and self.card2['rank'] == 'Q':
-            return 90
+            return 93
         if self.card1['rank'] == 'K' and self.card2['rank'] == 'J':
-            return 90
+            return 92
         if self.card1['rank'] == 'Q' and self.card2['rank'] == 'Q':
-            return 100
+            return 96
         if self.card1['rank'] == 'Q' and self.card2['rank'] == 'A':
-            return 90
+            return 97
         if self.card1['rank'] == 'Q' and self.card2['rank'] == 'K':
-            return 90
+            return 93
         if self.card1['rank'] == 'Q' and self.card2['rank'] == 'J':
-            return 90
+            return 91
         if self.card1['rank'] == 'J' and self.card2['rank'] == 'J':
-            return 100
+            return 90
         if self.card1['rank'] == 'J' and self.card2['rank'] == 'A':
-            return 90
+            return 95
         if self.card1['rank'] == 'J' and self.card2['rank'] == 'K':
-            return 90
+            return 92
         if self.card1['rank'] == 'J' and self.card2['rank'] == 'Q':
+            return 94
+        if self.card1['rank'] == self.card2['rank'] and (self.card1['rank'] == 'T' or self.card1['rank'] == '9'):
             return 90
         if self.card1['rank'] == self.card2['rank']:
-            return 100
+            return 80
         return 0
 
+
+
 if __name__ == "__main__":
-    for x in range(0, 10):
+    for x in range(0, 200):
         rand1 = random.choice("AKQJT98765432")
         rand2 = random.choice("AKQJT98765432")
         #print rand1, rand2
