@@ -5,7 +5,7 @@ import math
 
 
 
-state = {u'community_cards': [], u'minimum_raise': 10, u'small_blind': 300, u'pot': 30, u'orbits': 0, u'players': [{u'status': u'active', u'hole_cards': [{u'rank': u'7', u'suit': u'spades'}, {u'rank': u'K', u'suit': u'diamonds'}], u'name': u'Peter Python', u'id': 0, u'version': u'Default Python folding player', u'stack': 980, u'bet': 20}, {u'status': u'folded', u'name': u'Peter P2', u'stack': 1000, u'version': u'Default Python folding player', u'id': 1, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P3', u'stack': 1000, u'version': u'Default Python folding player', u'id': 2, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P4', u'stack': 990, u'version': u'Default Python folding player', u'id': 3, u'bet': 10}], u'in_action': 0, u'dealer': 2, u'current_buy_in': 20}
+state = {u'community_cards': [], u'minimum_raise': 10, u'small_blind': 300, u'pot': 30, u'orbits': 0, u'players': [{u'status': u'active', u'hole_cards': [{u'rank': u'10', u'suit': u'spades'}, {u'rank': u'K', u'suit': u'diamonds'}], u'name': u'Peter Python', u'id': 0, u'version': u'Default Python folding player', u'stack': 980, u'bet': 20}, {u'status': u'folded', u'name': u'Peter P2', u'stack': 1000, u'version': u'Default Python folding player', u'id': 1, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P3', u'stack': 1000, u'version': u'Default Python folding player', u'id': 2, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P4', u'stack': 990, u'version': u'Default Python folding player', u'id': 3, u'bet': 10}], u'in_action': 0, u'dealer': 2, u'current_buy_in': 20}
 #state = {u'community_cards': [{u'rank': u'K', u'suit': u'diamonds'}, {u'rank': u'A', u'suit': u'diamonds'}, {u'rank': u'A', u'suit': u'diamonds'}], u'minimum_raise': 10, u'small_blind': 10, u'pot': 30, u'orbits': 0, u'players': [{u'status': u'active', u'hole_cards': [{u'rank': u'2', u'suit': u'spades'}, {u'rank': u'A', u'suit': u'diamonds'}], u'name': u'Peter Python', u'id': 0, u'version': u'Default Python folding player', u'stack': 980, u'bet': 20}, {u'status': u'folded', u'name': u'Peter P2', u'stack': 1000, u'version': u'Default Python folding player', u'id': 1, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P3', u'stack': 1000, u'version': u'Default Python folding player', u'id': 2, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P4', u'stack': 990, u'version': u'Default Python folding player', u'id': 3, u'bet': 10}], u'in_action': 0, u'dealer': 2, u'current_buy_in': 20}
 #state = {u'community_cards': [{u'rank': u'A', u'suit': u'spades'}, {u'rank': u'K', u'suit': u'diamonds'}, {u'rank': u'A', u'suit': u'diamonds'}, {u'rank': u'A', u'suit': u'diamonds'}], u'minimum_raise': 10, u'small_blind': 10, u'pot': 30, u'orbits': 0, u'players': [{u'status': u'active', u'hole_cards': [{u'rank': u'2', u'suit': u'spades'}, {u'rank': u'A', u'suit': u'diamonds'}], u'name': u'Peter Python', u'id': 0, u'version': u'Default Python folding player', u'stack': 980, u'bet': 20}, {u'status': u'folded', u'name': u'Peter P2', u'stack': 1000, u'version': u'Default Python folding player', u'id': 1, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P3', u'stack': 1000, u'version': u'Default Python folding player', u'id': 2, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P4', u'stack': 990, u'version': u'Default Python folding player', u'id': 3, u'bet': 10}], u'in_action': 0, u'dealer': 2, u'current_buy_in': 20}
 
@@ -62,7 +62,7 @@ class Strategy(object):
             print "all in AK: " + str(self.getAllin(state))
             return self.getAllin(state)
 
-        if (ranks == "TT" or ranks == "99" or ranks == "AQ" or ranks == "AJ"):
+        if (ranks == "0011" or ranks == "99" or ranks == "AQ" or ranks == "AJ"):
             smallx6 = 6 * self.getSmallBlind(state)
             print "6 x small blind: " + str(smallx6)
             minRaise = self.getMinRaise(state)
@@ -89,8 +89,8 @@ class Strategy(object):
                 return 0
 
         if (isRateLow):
-            if (ranks == "7A" or ranks =="8A" or ranks == "9A" or ranks == "AT"
-                or ranks == "7K" or ranks =="8K" or ranks == "9K" or ranks == "KT"):
+            if (ranks == "7A" or ranks =="8A" or ranks == "9A" or ranks == "01A"
+                or ranks == "7K" or ranks =="8K" or ranks == "9K" or ranks == "01K"):
                 return self.getAllin(state)
 
         return 0
