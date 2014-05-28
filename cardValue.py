@@ -94,7 +94,7 @@ if __name__ == '__main__':
   print
 
   # --- 2p
-  dicc = [{u'rank': u'J', u'suit': u'spades'}, {u'rank': u'J', u'suit': u'diamonds'}, {u'rank': u'2', u'suit': u'diamonds'}, {u'rank': u'2', u'suit': u'diamonds'}]
+  dicc = [{u'rank': u'J', u'suit': u'spades'}, {u'rank': u'2', u'suit': u'diamonds'}, {u'rank': u'2', u'suit': u'diamonds'}, {u'rank': u'J', u'suit': u'diamonds'}]
   hv =CardValue( dicc )
   print dicc
   print '2p', hv.getValue()
