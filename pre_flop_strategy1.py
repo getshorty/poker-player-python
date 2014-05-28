@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from cardValue import CardValue
 
-state = {u'community_cards': [], u'minimum_raise': 10, u'small_blind': 10, u'pot': 30, u'orbits': 0, u'players': [{u'status': u'active', u'hole_cards': [{u'rank': u'J', u'suit': u'spades'}, {u'rank': u'A', u'suit': u'diamonds'}], u'name': u'Peter Python', u'id': 0, u'version': u'Default Python folding player', u'stack': 980, u'bet': 20}, {u'status': u'folded', u'name': u'Peter P2', u'stack': 1000, u'version': u'Default Python folding player', u'id': 1, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P3', u'stack': 1000, u'version': u'Default Python folding player', u'id': 2, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P4', u'stack': 990, u'version': u'Default Python folding player', u'id': 3, u'bet': 10}], u'in_action': 0, u'dealer': 2, u'current_buy_in': 20}
+state = {u'community_cards': [], u'minimum_raise': 10, u'small_blind': 10, u'pot': 30, u'orbits': 0, u'players': [{u'status': u'active', u'hole_cards': [{u'rank': u'A', u'suit': u'spades'}, {u'rank': u'A', u'suit': u'diamonds'}], u'name': u'Peter Python', u'id': 0, u'version': u'Default Python folding player', u'stack': 980, u'bet': 20}, {u'status': u'folded', u'name': u'Peter P2', u'stack': 1000, u'version': u'Default Python folding player', u'id': 1, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P3', u'stack': 1000, u'version': u'Default Python folding player', u'id': 2, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P4', u'stack': 990, u'version': u'Default Python folding player', u'id': 3, u'bet': 10}], u'in_action': 0, u'dealer': 2, u'current_buy_in': 20}
 
 class Strategy(object):
 
@@ -65,16 +65,17 @@ class Strategy(object):
 
     # returns with the raise amount for flop state
     def doFlop(self, state):
-#        print "warning: flop game"
-#        cards = self.getOurCards(state)
+        print "warning: flop game"
+        cards = self.getOurCards(state)
 #        cards2 = self.getOurCards(state)  #  self.getCommonCards(state)
 #        cards3 = cards.extend(cards2)
 #        print "all cards: " + str(cards3)
 
-#        cardValue = CardValue(cards3)
-#        value = cardValue.getValue()
-#        if (value > 19):
-#            return self.getPot(state)
+        cardValue = CardValue(cards)
+        value = cardValue.getValue()
+        print "card value " + str(value)
+        if (value > 9):
+            return self.getPot(state)
 
         return 0
 
