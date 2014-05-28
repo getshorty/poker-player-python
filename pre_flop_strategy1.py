@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from cardValue import CardValue
 
 state = {u'community_cards': [], u'minimum_raise': 10, u'small_blind': 10, u'pot': 30, u'orbits': 0, u'players': [{u'status': u'active', u'hole_cards': [{u'rank': u'J', u'suit': u'spades'}, {u'rank': u'A', u'suit': u'diamonds'}], u'name': u'Peter Python', u'id': 0, u'version': u'Default Python folding player', u'stack': 980, u'bet': 20}, {u'status': u'folded', u'name': u'Peter P2', u'stack': 1000, u'version': u'Default Python folding player', u'id': 1, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P3', u'stack': 1000, u'version': u'Default Python folding player', u'id': 2, u'bet': 0}, {u'status': u'folded', u'name': u'Peter P4', u'stack': 990, u'version': u'Default Python folding player', u'id': 3, u'bet': 10}], u'in_action': 0, u'dealer': 2, u'current_buy_in': 20}
 
@@ -38,21 +39,43 @@ class Strategy(object):
             print "all in AK: " + str(self.getAllin(state))
             return self.getAllin(state)
 
-        # rule 5 - 6: one pair or high rank cards
-        if (ranks == "TT" or ranks == "99" or ranks == "88" or ranks == "77"
-            or ranks == "66" or ranks == "55" or ranks == "44" or ranks == "33" or ranks == "22"
-            or ranks == "AQ" or ranks == "AJ" or ranks == "KQ"):
-            print "6 x small blind: " + str(6 * self.getSmallBlind(state))
-            return 6 * self.getSmallBlind(state)
+        if (ranks == "TT" or ranks == "99" or ranks == "AQ" or ranks == "AJ"):
+            smallx6 = 6 * self.getSmallBlind(state)
+            print "6 x small blind: " + str(smallx6)
+            minRaise = self.getMinRaise(state)
+            print "6 x small blind: " + str(minRaise)
+            if (smallx6 > minRaise):
+                return smallx6
+            else:
+                return self.getAllin(state)
 
-        # rule 5 - 6: one pair or high rank cards
-        # TODO megcsinalni 2. korben ugyanerre all in t adni
+        if (ranks == "88" or ranks == "77"
+            or ranks == "66" or ranks == "55" or ranks == "44" or ranks == "33" or ranks == "22"
+            or ranks == "KQ"):
+            smallx6 = 6 * self.getSmallBlind(state)
+            print "6 x small blind: " + str(smallx6)
+            minRaise = self.getMinRaise(state)
+            print "6 x small blind: " + str(minRaise)
+            if (smallx6 > minRaise):
+                return smallx6
+            else:
+                return 0
 
         return 0
 
     # returns with the raise amount for flop state
     def doFlop(self, state):
-        print "warning: flop game"
+#        print "warning: flop game"
+#        cards = self.getOurCards(state)
+#        cards2 = self.getOurCards(state)  #  self.getCommonCards(state)
+#        cards3 = cards.extend(cards2)
+#        print "all cards: " + str(cards3)
+
+#        cardValue = CardValue(cards3)
+#        value = cardValue.getValue()
+#        if (value > 19):
+#            return self.getPot(state)
+
         return 0
 
     def getOurPlayer(self, state):
@@ -66,6 +89,14 @@ class Strategy(object):
     def getSmallBlind(self, state):
         print "small blind: " + str(state['small_blind'])
         return state['small_blind']
+
+    def getMinRaise(self, state):
+        print "min raise: " + str(state['minimum_raise'])
+        return state['minimum_raise']
+
+    def getPot(self, state):
+        print "pot: " + str(state['pot'])
+        return state['pot']
 
     # returns the stack of our player
     def getAllin(self, state):
@@ -88,6 +119,6 @@ class Strategy(object):
     def getPosition(self, state):
         return state['in_action']
 
-
-s = Strategy()
-s.do(state)
+if __name__ == "__main__":
+    s = Strategy()
+    s.doFlop(state)
