@@ -15,9 +15,12 @@ class CardValue(object):
         self.equFunc()
         sames =  max( [ e for e in self.equ.values() ] )
 
-        # --- 1p, dr, po        
-        if sames >= 1:
-          rVal = { 1:0, 2:10, 3:30, 4:70 }[ sames ]
+        # --- 1p, dr, po
+        try:
+          if sames >= 1:
+            rVal = { 1:0, 2:10, 3:30, 4:70 }[ sames ]
+        except:
+          pass
         
         # --- 2p
         doubles = self.countThem( 2 )
@@ -37,9 +40,11 @@ class CardValue(object):
         vals = [ v for v in self.equ.values() ]
         vals.sort()
         
-        
         return rVal
         
+
+
+
         line = True
         lineC = 0
 
