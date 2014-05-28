@@ -31,9 +31,9 @@ class Player:
 
                 hv = HandValue(cards)
 
-                if hv.getValue() >= 95:
+                if hv.getValue() >= 90:
                     return stack
-                elif hv.getValue() >= 90:
+                elif hv.getValue() >= 80:
                     return smallBlind * 6
                 else:
                     return 3

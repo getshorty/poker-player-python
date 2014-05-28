@@ -7,12 +7,13 @@ class CardValue(object):
         self.cards = cards
         
         self.equ = {}
+        self.col = {}
 
     def getValue(self):
         rVal = 0
 
         self.equFunc()
-        sames =  max( [ e  for e in self.equ.values() ] )
+        sames =  max( [ e for e in self.equ.values() ] )
 
         # --- 1p, dr, po        
         if sames >= 1:
@@ -27,6 +28,10 @@ class CardValue(object):
         threes =  self.countThem( 3 )
         if doubles == 1 and threes == 1:
           rVal = max( rVal, 60 )
+          
+        # --- flush
+        if 5 == max( [ c for c in self.col.values() ] ):
+          rVal = max(  rVal, 50 )
 
           
         return rVal
@@ -39,6 +44,13 @@ class CardValue(object):
           self.equ[ c['rank'] ] += 1
         except:
            self.equ[ c['rank'] ]  = 1
+           
+        try:
+          self.col[ c['suit'] ] += 1
+        except:
+          self.col[ c['suit'] ]  = 1
+
+          
            
     def countThem( self, pThem ):
       vRet = 0
@@ -73,3 +85,9 @@ if __name__ == '__main__':
   print hv.getValue()
   print
   
+  # --- flush
+  dicc = [{u'rank': u'2', u'suit': u'spades'}, {u'rank': u'J', u'suit': u'spades'}, {u'rank': u'J', u'suit': u'spades'}, {u'rank': u'K', u'suit': u'spades'}, {u'rank': u'K', u'suit': u'spades'}]
+  hv =CardValue( dicc )
+  print dicc
+  print hv.getValue()
+  print
