@@ -14,29 +14,42 @@ class Player:
 
         if version == 5:
             try:
+                in_action_num = game_state[u'in_action']
+                in_action = game_state[u'players'][in_action_num]
+                cards = in_action['hole_cards']
+                stack = in_action['stack']
+                smallBlind = game_state['small_blind']
+                pot = game_state['pot']
+
                 commonCards = game_state['community_cards']
                 if commonCards is None or len(commonCards) == 0:
                     from handValue import HandValue
-                    in_action_num = game_state[u'in_action']
-                    in_action = game_state[u'players'][in_action_num]
-                    cards = in_action['hole_cards']
-                    stack = in_action['stack']
-                    smallBlind = game_state['small_blind']
-                    pot = state['pot']
 
                     hv = HandValue(cards)
 
                     if hv > 95:
                         return stack
-                    elif hv > 90 and stack < smallBlind * 8:
+                    elif hv > 90 and stack <= smallBlind * 8:
                         return smallBlind * 6
-                    elif hv > 80 and stack < smallBlind * 4:
+                    elif hv > 80 and stack <= smallBlind * 4:
                         return smallBlind * 4
+                    elif hv > 70 and stack <= smallBlind * 2:
+                        return smallBlind * 2
+                    else:
+                        return 5
+
+                else:
+                    from cardValue import CardValue
+                    downValue = CardValue(commonCards)
+
+                    allCards = list(commonCards)
+                    allCards.extend(cards)
+                    allValue = CardValue(allCards)
+
+                    if allValue >= downValue*2:
+                        return stack
                     else:
                         return 0
-
-
-
 
             except:
                 version = 4
